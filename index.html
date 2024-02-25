@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Table</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+  }
+
+  table {
+    width: 80%;
+    border-collapse: collapse;
+    background-color: #fff;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  button.delete {
+    background-color: #dc3545;
+  }
+
+  button.delete:hover {
+    background-color: #bd2130;
+  }
+
+  button.submit {
+    background-color: #28a745;
+  }
+
+  button.submit:hover {
+    background-color: #218838;
+  }
+
+  caption {
+    text-align: left;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-left: 10px;
+  }
+
+  .submit-section {
+    text-align: center;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<table>
+  <caption>User Information</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Country</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><input type="text" class="name"></td>
+      <td><input type="text" class="email"></td>
+      <td><input type="text" class="phone"></td>
+      <td><input type="text" class="country"></td>
+      <td><button onclick="addRow()">Add Row</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="submit-section">
+  <button onclick="submitForm()" class="submit">Submit</button>
+</div>
+
+<script>
+function addRow() {
+  var table = document.querySelector('table');
+  var newRow = table.insertRow(table.rows.length - 1); // Insert before the last row (excluding the add row row)
+  var cell1 = newRow.insertCell(0);
+  var cell2 = newRow.insertCell(1);
+  var cell3 = newRow.insertCell(2);
+  var cell4 = newRow.insertCell(3);
+  var cell5 = newRow.insertCell(4);
+
+  cell1.innerHTML = '<input type="text" class="name">';
+  cell2.innerHTML = '<input type="text" class="email">';
+  cell3.innerHTML = '<input type="text" class="phone">';
+  cell4.innerHTML = '<input type="text" class="country">';
+  cell5.innerHTML = '<button onclick="deleteRow(this)" class="delete">Delete</button>';
+}
+
+function deleteRow(button) {
+  var row = button.parentNode.parentNode;
+  row.parentNode.removeChild(row);
+}
+
+function submitForm() {
+  var table = document.querySelector('table');
+  var formData = [];
+  var rows = table.getElementsByTagName('tr');
+  for (var i = 1; i < rows.length - 1; i++) {
+    var cells = rows[i].getElementsByTagName('td');
+    var rowData = {};
+    rowData.name = cells[0].querySelector('input').value;
+    rowData.email = cells[1].querySelector('input').value;
+    rowData.phone = cells[2].querySelector('input').value;
+    rowData.country = cells[3].querySelector('input').value;
+    formData.push(rowData);
+  }
+  console.log(formData); // This is where you would submit the form data to your backend
+  alert('Form data submitted successfully!');
+}
+</script>
+
+</body>
+</html>
